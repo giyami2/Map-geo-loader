@@ -1,19 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { getGeoLocation } from "../hooks/useGeoLocation";
-import { Table } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 
-const MainPage = ({}) => {
+const MainPage = () => {
   const dispatch = useDispatch();
-  const geoLocationList = useSelector((state) => state.geolocationList);
-  const { data, loading } = geoLocationList;
+  const history = useHistory();
+  const geoLocations = useSelector((state) => state.geolocations);
+  const { data, loading } = geoLocations;
 
   useEffect(() => {
     dispatch(getGeoLocation());
   }, [dispatch]);
 
-  if (loading) {
+  const moveToGoogleMaps = (data) => {
     console.log(data);
+    history.push({
+      pathname: '/geomaps',
+      state: { geoData: data }
+    })
+  }
+
+  if (loading) {
     return (
       <Table striped bordered hover variant="dark">
         <thead>
@@ -52,11 +61,7 @@ const MainPage = ({}) => {
                   />
                 </td>
                 <td>
-                  <input
-                    className="textbox"
-                    size="3"
-                    defaultValue={d.zoom}
-                  />
+                  <input className="textbox" size="3" defaultValue={d.zoom} />
                 </td>
                 <td>
                   <input
@@ -66,7 +71,12 @@ const MainPage = ({}) => {
                   />
                 </td>
                 <td>
-                  <input className="textbox" size="2" defaultValue="" />
+                  <Button
+                    variant="info"
+                    onClick={() => moveToGoogleMaps(d)}
+                  >
+                    지도
+                  </Button>
                 </td>
               </tr>
             );
