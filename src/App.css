@@ -13,3 +13,12 @@ Table > tbody > tr > td{
 .textbox {
   width : 100%;
 }
+
+.list-group-head {
+  max-width: 400px;
+  text-align: center;
+}
+
+.list-group-items {
+  width: 90px !important
+}

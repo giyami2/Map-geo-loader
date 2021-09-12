@@ -1,16 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import MainPage from './pages/MainPage';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+} from 'react-router-dom';
 
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import MainPage from "./pages/MainPage";
+import GeoMaps from "./pages/Geomaps";
+
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const App = () => {
-
-    return (
-      <div className="App">
-        <MainPage />
-      </div>
-    );
-}
+  return (
+    <Router>
+      <Switch>
+        <Route path="/" exact>
+          <MainPage />
+        </Route>
+        <Route path="/geomaps" exact>
+          <GeoMaps />
+        </Route>
+      </Switch>
+    </Router>
+  );
+};
 
 export default App;
